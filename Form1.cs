@@ -6,19 +6,21 @@ namespace Calculator
 {
     public partial class Form1 : Form
     {
-        string[] strNum = new string[16] { "", "", "" ,"", "", "", "", "", "", "", "", "", "", "", "", "" };
-        double[] dblNum = new double[16] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+        string[] strNum = new string[16] { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+        double[] dblNum = new double[16] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         double resault = 0.0D;
         string amaliat;
+        string amaliat2 = "";
         double FirstNumD = 0.0D;
         double SecNumD = 0.0D;
         double semiRes = 0.0D;
+        double MultiFnum = 1.0D;
 
         public Form1()
         {
             InitializeComponent();
         }
-        
+
 
         private void btnN1_Click(object sender, EventArgs e)
         {
@@ -136,19 +138,51 @@ namespace Calculator
                         resault = semiRes;
                         break;
                     case "*":
-                        SecNumD = Convert.ToDouble(txtInput.Text);
-                        semiRes = (semiRes * SecNumD);
-                        resault = semiRes;
+                        if (amaliat2 == "-")
+                        {
+                            SecNumD = Convert.ToDouble(txtInput.Text);
+                            semiRes -= (MultiFnum * SecNumD);
+                            resault = semiRes;
+
+                        }
+                        else if (amaliat2 == "+")
+                        {
+                            SecNumD = Convert.ToDouble(txtInput.Text);
+                            semiRes += (MultiFnum * SecNumD);
+                            resault = semiRes;
+                        }
+                        else if (amaliat2 == "")
+                        {
+                            SecNumD = Convert.ToDouble(txtInput.Text);
+                            semiRes *= SecNumD;
+                            resault = semiRes;
+                        }
                         break;
                     case "/":
-                        SecNumD = Convert.ToDouble(txtInput.Text);
-                        semiRes = (semiRes / SecNumD);
-                        resault = semiRes;
+                        if (amaliat2 == "-")
+                        {
+                            SecNumD = Convert.ToDouble(txtInput.Text);
+                            semiRes -= (MultiFnum / SecNumD);
+                            resault = semiRes;
+
+                        }
+                        else if (amaliat2 == "+")
+                        {
+                            SecNumD = Convert.ToDouble(txtInput.Text);
+                            semiRes += (MultiFnum / SecNumD);
+                            resault = semiRes;
+                        }
+                        else if (amaliat2 == "")
+                        {
+                            SecNumD = Convert.ToDouble(txtInput.Text);
+                            semiRes /= SecNumD;
+                            resault = semiRes;
+                        }
                         break;
                 }
             }
 
-          
+
             for (int i = 0; i < dblNum.Length; i++)
             {
                 strNum[i] = "";
@@ -156,8 +190,10 @@ namespace Calculator
             }
             txtInput.Text = resault.ToString();
             resault = 0;
+            MultiFnum = 1.0D;
             semiRes = 0.0D;
             amaliat = "";
+            amaliat2 = "";
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -167,28 +203,54 @@ namespace Calculator
 
         private void btnAmalit_Click(object sender, EventArgs e)
         {
-       
+
             FirstNumD = Convert.ToDouble(txtInput.Text);
 
             Button opBtn = (Button)sender;
             switch (opBtn.Text)
             {
                 case "+":
-                    if (amaliat == "-")
+                    if (amaliat2 == "-")
                     {
                         semiRes -= FirstNumD;
                         amaliat = "+";
-
+                        amaliat2 = "+";
+                        break;
+                    }
+                    if (amaliat == "*")
+                    {
+                        semiRes += (MultiFnum * FirstNumD);
+                        MultiFnum = 1.0D;
+                        amaliat = "+";
+                        amaliat2 = "+";
                         break;
                     }
                     semiRes += FirstNumD;
+                    MultiFnum = 1.0D;
                     amaliat = "+";
+                    amaliat2 = "+";
                     break;
                 case "-":
                     //for (int i = 0; i < 15; i++)
                     //{
                     //    resault -= dblNum[i];
                     //}
+                    if (amaliat2 == "+")
+                    {
+                        semiRes += MultiFnum * FirstNumD;
+                        MultiFnum = 1.0D;
+                        amaliat = "-";
+                        amaliat2 = "-";
+                        break;
+                    }
+                    if (amaliat == "*")
+                    {
+                        semiRes -= (MultiFnum * FirstNumD);
+                        MultiFnum = 1.0D;
+                        amaliat = "-";
+                        amaliat2 = "-";
+                        break;
+                    }
                     if (amaliat == "+")
                     {
                         semiRes += FirstNumD;
@@ -203,15 +265,32 @@ namespace Calculator
                         amaliat = "-";
                         break;
                     }
+                    if (amaliat == "/")
+                    {
+                        semiRes = (semiRes / FirstNumD);
+                        amaliat = "-";
+                        break;
+                    }
+                    semiRes += FirstNumD;
                     amaliat = "-";
+                    amaliat2 = "-";
+                    MultiFnum = 1.0D;
                     break;
                 case "*":
-                    double MultiFnum = 0.0D;
-                    if (amaliat == "+" | amaliat == "-")
+                    if (amaliat2 == "+" || amaliat2 == "-")
                     {
-                        MultiFnum = Convert.ToDouble(txtInput.Text);
+                        MultiFnum *= FirstNumD;
+                        amaliat = "*";
+                        break;
 
                     }
+                    //if (amaliat == "-")
+                    //{
+                    //    semiRes -= FirstNumD;
+                    //    amaliat = "*";
+
+                    //    break;
+                    //}
                     if (amaliat == "*")
                     {
                         semiRes = (semiRes * FirstNumD);
@@ -221,6 +300,13 @@ namespace Calculator
                     amaliat = "*";
                     break;
                 case "/":
+                    if (amaliat2 == "+" || amaliat2 == "-")
+                    {
+                        MultiFnum = FirstNumD;
+                        amaliat = "/";
+                        break;
+
+                    }
                     if (amaliat == "/")
                     {
                         semiRes = (semiRes / FirstNumD);

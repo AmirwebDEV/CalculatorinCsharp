@@ -178,7 +178,19 @@ namespace Calculator
                     {
                         semiRes -= FirstNumD;
                         amaliat = "+";
+                        break;
+                    }
+                    if (amaliat == "*")
+                    {
+                        semiRes = (semiRes * FirstNumD);
+                        amaliat = "+";
 
+                        break;
+                    }
+                    if (amaliat == "/")
+                    {
+                        semiRes = (semiRes / FirstNumD);
+                        amaliat = "+";
                         break;
                     }
                     semiRes += FirstNumD;
@@ -189,32 +201,62 @@ namespace Calculator
                     //{
                     //    resault -= dblNum[i];
                     //}
+                    if (amaliat == "*")
+                    {
+                        semiRes = (semiRes * FirstNumD);
+                        amaliat = "-";
+
+                        break;
+                    }
                     if (amaliat == "+")
                     {
                         semiRes += FirstNumD;
                         amaliat = "-";
                         break;
                     }
-                    if (dblNum[0] == 0)
-                        semiRes += FirstNumD;
-                    if (dblNum[0] != 0)
+                    
+                    if (amaliat == "-")
                     {
                         semiRes -= FirstNumD;
                         amaliat = "-";
                         break;
                     }
+                    if (amaliat == "/")
+                    {
+                        semiRes = (semiRes / FirstNumD);
+                        amaliat = "-";
+                        break;
+                    }
+                    semiRes += FirstNumD;
                     amaliat = "-";
                     break;
                 case "*":
-                    double MultiFnum = 0.0D;
-                    if (amaliat == "+" | amaliat == "-")
+                    if (amaliat == "+")
                     {
-                        MultiFnum = Convert.ToDouble(txtInput.Text);
+                        //MultiFnum = Convert.ToDouble(txtInput.Text);
+                        semiRes += FirstNumD;
+                        amaliat = "*";
+                        break;
 
+                    }
+                    if (amaliat == "-")
+                    {
+                        semiRes -= FirstNumD;
+                        amaliat = "*";
+
+                        break;
                     }
                     if (amaliat == "*")
                     {
                         semiRes = (semiRes * FirstNumD);
+                        amaliat = "*";
+
+                        break;
+                    }
+                    if (amaliat == "/")
+                    {
+                        semiRes = (semiRes / FirstNumD);
+                        amaliat = "*";
                         break;
                     }
                     semiRes += FirstNumD;
@@ -224,6 +266,29 @@ namespace Calculator
                     if (amaliat == "/")
                     {
                         semiRes = (semiRes / FirstNumD);
+                        amaliat = "/";
+                        break;
+                    }
+                    if (amaliat == "+")
+                    {
+                        //MultiFnum = Convert.ToDouble(txtInput.Text);
+                        semiRes += FirstNumD;
+                        amaliat = "/";
+                        break;
+
+                    }
+                    if (amaliat == "-")
+                    {
+                        semiRes -= FirstNumD;
+                        amaliat = "/";
+
+                        break;
+                    }
+                    if (amaliat == "*")
+                    {
+                        semiRes = (semiRes * FirstNumD);
+                        amaliat = "/";
+
                         break;
                     }
                     semiRes += FirstNumD;
